@@ -1,0 +1,5 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"D:/MonoGame/TrexGame/Content/Sounds/button-press.mp3","D:/MonoGame/TrexGame/Content/bin/DesktopGL/Sounds/button-press.xnb","SongProcessor","SongContent",5178,130,0.3520484
+"D:/MonoGame/TrexGame/Content/Sounds/hit.mp3","D:/MonoGame/TrexGame/Content/bin/DesktopGL/Sounds/hit.xnb","SongProcessor","SongContent",7212,121,0.1193712
+"D:/MonoGame/TrexGame/Content/Sounds/score-reached.mp3","D:/MonoGame/TrexGame/Content/bin/DesktopGL/Sounds/score-reached.xnb","SongProcessor","SongContent",9250,131,0.1301015
+"D:/MonoGame/TrexGame/Content/Textures/TrexSpritesheet.png","D:/MonoGame/TrexGame/Content/bin/DesktopGL/Textures/TrexSpritesheet.xnb","TextureProcessor","Texture2DContent",2433,335461,0.0290959
