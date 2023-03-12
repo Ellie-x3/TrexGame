@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace TrexGame.Graphics.Animations;
 
 public interface IAnimation {
-    void Update(GameTime gt);
-    void Draw(Vector2 pos);
-    void Play();
+    string texture {get; set;}
+    List<Frame> frames { get; set; }
+    List<Frame> GetFrames{ get {return frames;}}
 }
 

@@ -52,7 +52,8 @@ public class TRexRunnerGame : Game {
         _sfxScoreReached = Content.Load<SoundEffect>(TREX_SFX_SCORE_REACHED);
         _sfxButtonPress = Content.Load<SoundEffect>(TREX_SFX_BUTTON_PRESSED);
         _spriteSheetTexture = Content.Load<Texture2D>(TREX_SPRITESHEET);
-        _trex = new Trex(_spriteBatch, Content);
+        Globals.Content = Content;
+        _trex = new Trex(_spriteBatch, Content);     
     }
 
     protected override void Update(GameTime gameTime) {

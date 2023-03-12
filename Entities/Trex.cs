@@ -25,20 +25,21 @@ namespace TrexGame.Entities {
         public float Speed { get; private set; }
         public int DrawOrder { get; set; }
 
-        private Idle IdleAnimation { get; set; }
+        private Animation<Idle> IdleAnimation;
 
         public Trex(SpriteBatch s, ContentManager c) {
             state = TrexState.Idle;
-            IdleAnimation = new Idle(s, c);
+            
+            IdleAnimation = new Animation<Idle>(s, c);           
         }
 
         public void Draw(SpriteBatch spriteBatch) {
             if (state == TrexState.Idle) {    
-                IdleAnimation.Draw(Position);
+                IdleAnimation.Draw(new Vector2(200, 50));
             }
         }
 
-        public void Update(GameTime gameTime) {
+        public void Update(GameTime gameTime) {      
             if (state == TrexState.Idle) {
                 IdleAnimation.Update(gameTime);
             }

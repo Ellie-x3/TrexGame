@@ -15,8 +15,6 @@ public class Frame {
         }
     }
 
-    // float Timestamp
-
     public float TimeStamp { get; } //immutable
 
     public Frame(Sprite s, float t) {

@@ -7,93 +7,60 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TrexGame.Graphics.Animations;
 
-public class Animation {
-    //Constructor
+public class Animation<T> where T : IAnimation{
 
-    //List Frames
-    private List<Frame> _frames = new List<Frame>();
+    private T animation;
 
-    //Bool IsPlaying private
-    public bool IsPlaying { get; private set; }
+    public SpriteBatch spriteBatch {get;}
+    public ContentManager content {get;}
 
-    //Float AnimationProgress private setter
-    public float AnimationProgress { get; private set; }
+    public bool IsPlaying {get; private set;}
+    public float AnimationProgress {get; private set;}
 
-    //Looping
-    public bool Loop { get; set; } = true;
+    public List<Frame> _frames {get; set;}
 
-    //Get current frame
+    public Animation(SpriteBatch s, ContentManager c){
+        spriteBatch = s;
+        content = c;
+        animation = Activator.CreateInstance<T>();
+        _frames = animation.GetFrames;
+    }
+
     public Frame CurrentFrame {
         get {
             return _frames
-                .Where(f => f.TimeStamp <= AnimationProgress)
-                .MaxBy(f => f.TimeStamp);
-        }
-    }
-
-    //Get total frames
-    public int TotalFrames {
-        get {
-            return _frames.Count - 1;
+            .Where(f => f.TimeStamp <= AnimationProgress)
+            .MaxBy(f => f.TimeStamp);
         }
     }
 
     public float Duration {
         get {
-            if (!_frames.Any())
+            if (!_frames.Any()){
                 return 0;
+            }
+
             return _frames.Max(f => f.TimeStamp);
         }
     }
 
-    //AddFrame(sprite, timestamp)
-    public void AddFrame(Sprite s, float t) {
-         Frame frame = new Frame(s, t);
-        _frames.Add(frame);
-    }
-
-    //Update Method
     public void Update(GameTime gt) {
-        if (!IsPlaying)
-            return;
 
-        AnimationProgress += (float)gt.ElapsedGameTime.TotalSeconds;
-
-        if (AnimationProgress > Duration)
-            if(Loop)
-                AnimationProgress -= Duration;
-            else Stop();   
-            
     }
 
-    public void Draw(SpriteBatch s, Vector2 pos) {
+    public void Draw(Vector2 pos) {
         Frame frame = CurrentFrame;
 
-        if (frame != null)
-            frame.SpriteFrame.Draw(s, pos);
+        if(frame != null)
+            frame.SpriteFrame.Draw(spriteBatch, pos);
     }
 
-    //Play Method
     public void Play() {
         IsPlaying = true;
+        AnimationProgress = 0;
     }
 
-    //Stop Method
-    public void Stop() {
-        IsPlaying = false;
-        AnimationProgress = 0f;
-    }
+    public void Stop(){
 
-    //GetFrame(Frame) [Indexer]
-    public Frame this[int i] {
-        get => GetFrame(i);
-    }
-
-    public Frame GetFrame(int i) {
-        if (i < 0 || i >= _frames.Count) {
-            throw new ArgumentOutOfRangeException(nameof(i), "Index is out of range in the current animation");
-        }
-
-        return _frames[i];
     }
 }
