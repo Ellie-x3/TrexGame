@@ -21,4 +21,4 @@ public class Frame {
         TimeStamp = t;
         SpriteFrame = s;
     }
-}
+}               

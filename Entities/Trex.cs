@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -30,12 +31,12 @@ namespace TrexGame.Entities {
         public Trex(SpriteBatch s, ContentManager c) {
             state = TrexState.Idle;
             
-            IdleAnimation = new Animation<Idle>(s, c);           
+            IdleAnimation = new Animation<Idle>(s, c);        
         }
 
         public void Draw(SpriteBatch spriteBatch) {
             if (state == TrexState.Idle) {    
-                IdleAnimation.Draw(new Vector2(200, 50));
+                IdleAnimation.Draw(new Vector2(400, 50));
             }
         }
 

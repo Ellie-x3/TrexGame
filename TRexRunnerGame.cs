@@ -18,7 +18,7 @@ public class TRexRunnerGame : Game {
     public const int WINDOW_HEIGHT = 150;
     private const int TREX_START_POS_X = 1;
     private const int TREX_START_POS_Y = WINDOW_HEIGHT - 68;
-
+    
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 

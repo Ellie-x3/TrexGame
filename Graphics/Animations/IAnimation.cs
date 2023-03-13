@@ -11,5 +11,9 @@ public interface IAnimation {
     string texture {get; set;}
     List<Frame> frames { get; set; }
     List<Frame> GetFrames{ get {return frames;}}
+    SpriteBatch spriteBatch { get; }
+
+    void Update(GameTime gt);
+    void Draw(Vector2 pos);
 }
 
