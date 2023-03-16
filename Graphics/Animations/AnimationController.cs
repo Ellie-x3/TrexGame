@@ -25,7 +25,11 @@ public interface IAnimationController {
     void Stop();
 }
 
-public class AnimationController : IAnimationController {
+public sealed class AnimationController : IAnimationController {
+    
+    private static AnimationController instance = null;
+    private static readonly object padlock = new object();
+   
     private IAnimation _animation;
 
     public SpriteBatch spriteBatch {get;}
@@ -47,6 +51,8 @@ public class AnimationController : IAnimationController {
     public bool IsCurrentAnimationFinished {get; private set;}
     public List<Frame> frames {get; set;}
 
+    public EventHandler animationCompleted;
+
     public Frame CurrentFrame {
         get {
             return frames
@@ -64,10 +70,18 @@ public class AnimationController : IAnimationController {
         }
     }
 
-    public AnimationController(IAnimation anim, SpriteBatch s){
+    private AnimationController(IAnimation anim, SpriteBatch s){
         _animation = anim;
         frames = _animation.GetFrames;
         spriteBatch = s;
+    }
+
+    public static AnimationController Instance(IAnimation anim, SpriteBatch s) {
+        lock (padlock){
+            if (instance == null)
+                instance = new AnimationController(anim, s);
+            return instance;
+        }
     }
 
     public void Draw(Vector2 pos)
@@ -100,8 +114,10 @@ public class AnimationController : IAnimationController {
             return;
 
         if(IsCurrentAnimationFinished){
-           _animation.Update(gt);
-           frames = _animation.GetFrames;
+           //_animation.Update(gt);
+            frames = _animation.GetFrames;
+            if(animationCompleted != null)
+                animationCompleted(this, EventArgs.Empty);
         }
         
         IsCurrentAnimationFinished = false;

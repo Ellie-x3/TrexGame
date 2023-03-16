@@ -5,15 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TrexGame.Graphics.Animations;
 
-public class DefaultSquare : IAnimation
+public class DefaultSquare : AAnimation
 {
-    public string texture {get; set;}
-    public List<Frame> frames { get; set; }
-    public List<Frame> GetFrames{ get {return frames;}}
-    public int TotalFrames {get {return frames.Count;}}
-    Texture2D text;
-
-    public DefaultSquare(){
+    public DefaultSquare(SpriteBatch spriteBatch) : base(spriteBatch){
         texture = "Textures\\defaultTexture";
         
         if(Globals.Content == null) 
@@ -23,9 +17,5 @@ public class DefaultSquare : IAnimation
         frames = new List<Frame>{
             new Frame(new Sprite(text, 0, 0, 16, 16), 0),
         };
-    }
-
-    public void Update(GameTime gameTime){
-
     }
 }

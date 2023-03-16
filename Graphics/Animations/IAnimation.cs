@@ -9,6 +9,6 @@ public interface IAnimation {
     List<Frame> frames { get; set; }
     List<Frame> GetFrames{ get {return frames;}}
     int TotalFrames {get {return frames.Count;}}
-    void Update(GameTime gameTime);
+    SpriteBatch batch{get;set;}
 }
 

@@ -5,14 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TrexGame.Graphics.Animations{
 
-    public class Idle : IAnimation {
-        public string texture {get; set;}
-        public List<Frame> frames { get; set; }
-        public List<Frame> GetFrames{ get {return frames;}}
-        public int TotalFrames {get {return frames.Count;}}
-        Texture2D text;
-
-        public Idle(){
+    public class Idle : AAnimation {
+        public Idle(SpriteBatch spriteBatch) : base(spriteBatch){
             texture = "Textures\\TrexSpriteSheet";
             
             if(Globals.Content == null) 
@@ -24,10 +18,14 @@ namespace TrexGame.Graphics.Animations{
                 new Frame(new Sprite(text, 848 + 44, 0, 44, 52), 1f),
                 new Frame(new Sprite(text, 848, 0, 44, 52), 1f + 1/3f)
             };
+
+            AnimationController controller = AnimationController.Instance(this, batch);
+            controller.animationCompleted += new EventHandler(UpdateFrames);
         }
 
-        public void Update(GameTime gt){
+        public void UpdateFrames(object sender, EventArgs e){
             Random random = new Random();
+            Console.WriteLine("meow");
             float randomTimeStamp = this.TotalFrames + (float)random.NextDouble() * (10f - this.TotalFrames);
             frames = new List<Frame>{
               new Frame(new Sprite(text, 848, 0, 44, 52), 0),
