@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Globalization;
+using System.Diagnostics;
 using System;
 
 namespace TrexGame.Graphics.Animations;
@@ -5,6 +9,7 @@ namespace TrexGame.Graphics.Animations;
 public class Frame {
     //Sprite
     private Sprite _sprite;
+    public bool IsRandom { get; } = false;
 
     public Sprite SpriteFrame {
         get => _sprite;
@@ -15,7 +20,7 @@ public class Frame {
         }
     }
 
-    public float TimeStamp { get; } //immutable
+    public float TimeStamp { get; set; }
 
     public Frame(Sprite s, float t) {
         TimeStamp = t;

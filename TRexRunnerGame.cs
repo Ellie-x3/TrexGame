@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using TrexGame.Entities;
-using TrexGame.Graphics;
-using TrexGame.Graphics.Animations;
 
 namespace TrexGame;
 
@@ -18,7 +17,7 @@ public class TRexRunnerGame : Game {
     public const int WINDOW_HEIGHT = 150;
     private const int TREX_START_POS_X = 1;
     private const int TREX_START_POS_Y = WINDOW_HEIGHT - 68;
-    
+
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -53,7 +52,7 @@ public class TRexRunnerGame : Game {
         _sfxButtonPress = Content.Load<SoundEffect>(TREX_SFX_BUTTON_PRESSED);
         _spriteSheetTexture = Content.Load<Texture2D>(TREX_SPRITESHEET);
         Globals.Content = Content;
-        _trex = new Trex(_spriteBatch, Content);     
+        _trex = new Trex(_spriteBatch, _sfxButtonPress);
     }
 
     protected override void Update(GameTime gameTime) {
@@ -69,7 +68,6 @@ public class TRexRunnerGame : Game {
 
     protected override void Draw(GameTime gameTime) {
         GraphicsDevice.Clear(Color.White);
-
         _spriteBatch.Begin();
         _trex.Draw(_spriteBatch);
         _spriteBatch.End();

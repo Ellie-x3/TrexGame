@@ -1,14 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Content;
-using TrexGame.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using TrexGame.Graphics.Animations;
 using TrexGame.StateMachine;
 
@@ -26,24 +18,44 @@ namespace TrexGame.Entities {
         public float Speed { get; private set; }
         public int DrawOrder { get; set; }
 
-        private Animation<Idle> IdleAnimation;
+        private Animation animation;
+        private SoundEffect jumpSfx;
+        private Input.InputController input;
 
-        public Trex(SpriteBatch s, ContentManager c) {
+        public Trex(SpriteBatch s, SoundEffect sfx) {
             state = TrexState.Idle;
-            
-            IdleAnimation = new Animation<Idle>(s, c);        
+            Position = new Vector2(1,88);
+            animation = new Animation(s);
+           // animation.SetAnimation<Idle>();     
+            input = new Input.InputController(this);
+            jumpSfx = sfx;  
         }
 
         public void Draw(SpriteBatch spriteBatch) {
-            if (state == TrexState.Idle) {    
-                IdleAnimation.Draw(new Vector2(400, 50));
+            if (state == TrexState.Idle) {  
+                  animation.Draw(Position);
             }
         }
 
-        public void Update(GameTime gameTime) {      
+        public void Update(GameTime gameTime) {   
+            input.ProcessControls(gameTime);  
+
             if (state == TrexState.Idle) {
-                IdleAnimation.Update(gameTime);
+                animation.Update(gameTime);        
             }
+        }
+
+        public bool BeginJump(){
+            if(state == TrexState.Jumping || state == TrexState.Falling)
+                return false;
+
+            animation.SetAnimation<Idle>();
+            jumpSfx.Play();
+            return true;
+        }
+
+        public bool ContinueJump(){
+            return true;
         }
     }
 }

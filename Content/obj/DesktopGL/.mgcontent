@@ -7,9 +7,11 @@
     <File>D:/MonoGame/TrexGame/Content/Sounds/button-press.mp3</File>
     <File>D:/MonoGame/TrexGame/Content/Sounds/hit.mp3</File>
     <File>D:/MonoGame/TrexGame/Content/Sounds/score-reached.mp3</File>
+    <File>D:/MonoGame/TrexGame/Content/Textures/defaultTexture.png</File>
     <File>D:/MonoGame/TrexGame/Content/Textures/TrexSpritesheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

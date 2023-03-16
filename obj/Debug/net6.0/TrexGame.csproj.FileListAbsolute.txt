@@ -30,3 +30,4 @@ D:\MonoGame\TrexGame\bin\Debug\net6.0\Content\Sounds\hit.xnb
 D:\MonoGame\TrexGame\bin\Debug\net6.0\Content\Sounds\score-reached.ogg
 D:\MonoGame\TrexGame\bin\Debug\net6.0\Content\Sounds\score-reached.xnb
 D:\MonoGame\TrexGame\bin\Debug\net6.0\Content\Textures\TrexSpritesheet.xnb
+D:\MonoGame\TrexGame\bin\Debug\net6.0\Content\Textures\defaultTexture.xnb

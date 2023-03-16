@@ -14,12 +14,15 @@ public interface IAnimationController {
 
     bool IsPlaying {get;set;}
     float AnimationProgress{get; set;}
+    bool ShouldLoop{get;set;}
+    bool IsCurrentAnimationFinished {get;}
+    List<Frame> frames {get;set;}
+    IAnimation animation {get;set;}
 
     void Update(GameTime gt);
     void Draw(Vector2 pos);
     void Play();
     void Stop();
-
 }
 
 public class AnimationController : IAnimationController {
@@ -27,13 +30,26 @@ public class AnimationController : IAnimationController {
 
     public SpriteBatch spriteBatch {get;}
     public ContentManager content {get;}
+    public IAnimation animation {
+        get {
+            return _animation;
+        }
 
+        set {
+            _animation = value;
+            frames = _animation.frames;
+        }
+    }
+    
     public bool IsPlaying { get; set; } = true;
     public float AnimationProgress { get; set; }
+    public bool ShouldLoop {get; set;} = true;
+    public bool IsCurrentAnimationFinished {get; private set;}
+    public List<Frame> frames {get; set;}
 
     public Frame CurrentFrame {
         get {
-            return _animation.frames
+            return frames
             .Where(f => f.TimeStamp <= AnimationProgress)
             .MaxBy(f => f.TimeStamp);
         }
@@ -41,15 +57,16 @@ public class AnimationController : IAnimationController {
 
     public float Duration {
         get {
-            if(!_animation.frames.Any())
+            if(!frames.Any())
                 return 0;
 
-            return _animation.frames.Max(f => f.TimeStamp);
+            return frames.Max(f => f.TimeStamp);
         }
     }
 
     public AnimationController(IAnimation anim, SpriteBatch s){
         _animation = anim;
+        frames = _animation.GetFrames;
         spriteBatch = s;
     }
 
@@ -72,14 +89,27 @@ public class AnimationController : IAnimationController {
         AnimationProgress = 0f;
     }
 
+    public void Clear(){
+        Stop();
+        frames.Clear(); 
+    }
+
     public void Update(GameTime gt)
     {
         if (!IsPlaying)
             return;
 
+        if(IsCurrentAnimationFinished){
+           _animation.Update(gt);
+           frames = _animation.GetFrames;
+        }
+        
+        IsCurrentAnimationFinished = false;
         AnimationProgress += (float)gt.ElapsedGameTime.TotalSeconds;
 
-        if(AnimationProgress > Duration)
-            AnimationProgress -= Duration;
+        if(AnimationProgress > Duration){
+          AnimationProgress = 0;
+          IsCurrentAnimationFinished = true;
+        }
     }
 }
