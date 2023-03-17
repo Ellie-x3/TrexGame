@@ -15,7 +15,7 @@ public interface IAnimationController {
     bool IsPlaying {get;set;}
     float AnimationProgress{get; set;}
     bool ShouldLoop{get;set;}
-    bool IsCurrentAnimationFinished {get;}
+
     List<Frame> frames {get;set;}
     IAnimation animation {get;set;}
 
@@ -26,10 +26,8 @@ public interface IAnimationController {
 }
 
 public sealed class AnimationController : IAnimationController {
-    
-    private static AnimationController instance = null;
-    private static readonly object padlock = new object();
-   
+       
+    private static Dictionary<IAnimation, AnimationController> activeInstances = new Dictionary<IAnimation, AnimationController>();
     private IAnimation _animation;
 
     public SpriteBatch spriteBatch {get;}
@@ -50,8 +48,25 @@ public sealed class AnimationController : IAnimationController {
     public bool ShouldLoop {get; set;} = true;
     public bool IsCurrentAnimationFinished {get; private set;}
     public List<Frame> frames {get; set;}
+    private static int count = 0;
 
     public EventHandler animationCompleted;
+
+    private AnimationController(IAnimation anim, SpriteBatch s){
+        _animation = anim;
+        frames = _animation.GetFrames;
+        spriteBatch = s;
+        Console.WriteLine(++count);
+    }
+
+    public static AnimationController GetInstance(IAnimation anim, SpriteBatch s) {
+        if(!activeInstances.ContainsKey(anim)){
+            activeInstances[anim] = new AnimationController(anim, s);
+            Console.WriteLine("Creating");
+        }
+            
+        return activeInstances[anim];
+    }
 
     public Frame CurrentFrame {
         get {
@@ -70,24 +85,10 @@ public sealed class AnimationController : IAnimationController {
         }
     }
 
-    private AnimationController(IAnimation anim, SpriteBatch s){
-        _animation = anim;
-        frames = _animation.GetFrames;
-        spriteBatch = s;
-    }
-
-    public static AnimationController Instance(IAnimation anim, SpriteBatch s) {
-        lock (padlock){
-            if (instance == null)
-                instance = new AnimationController(anim, s);
-            return instance;
-        }
-    }
-
     public void Draw(Vector2 pos)
     {
         Frame frame = CurrentFrame;
-
+    
         if(frame != null)
             frame.SpriteFrame.Draw(spriteBatch, pos);
     }
@@ -113,19 +114,15 @@ public sealed class AnimationController : IAnimationController {
         if (!IsPlaying)
             return;
 
-        if(IsCurrentAnimationFinished){
-           //_animation.Update(gt);
-            frames = _animation.GetFrames;
-            if(animationCompleted != null)
-                animationCompleted(this, EventArgs.Empty);
-        }
-        
-        IsCurrentAnimationFinished = false;
         AnimationProgress += (float)gt.ElapsedGameTime.TotalSeconds;
 
         if(AnimationProgress > Duration){
           AnimationProgress = 0;
-          IsCurrentAnimationFinished = true;
+
+            frames = _animation.GetFrames;
+
+            if(animationCompleted != null)
+                animationCompleted(this, EventArgs.Empty);
         }
     }
 }

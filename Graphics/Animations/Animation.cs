@@ -15,7 +15,6 @@ public class Animation {
     public Animation(SpriteBatch s) {
         spriteBatch = s;
         animation = GetAnimation<DefaultSquare>();
-        animationController = AnimationController.Instance(animation, spriteBatch);
     }
 
     public void Draw(Vector2 pos) {
@@ -35,6 +34,7 @@ public class Animation {
         T anim = (T)Activator.CreateInstance(typeof(T), spriteBatch);
         animations.Add(type, anim);
 
+        animationController = AnimationController.GetInstance(anim, spriteBatch);
         return anim;
     }
 

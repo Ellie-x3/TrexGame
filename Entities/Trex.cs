@@ -6,11 +6,6 @@ using TrexGame.StateMachine;
 
 namespace TrexGame.Entities {
     internal class Trex : IGameEntity {
-        private const int TREX_DEFAULT_POSX = 848;
-        private const int TREX_DEFAULT_POSY = 0;
-        private const int TREX_DEFAULT_WIDTH = 44;
-        private const int TREX_DEFAULT_HEIGHT = 52;
-
         //Properties
         public TrexState state { get; private set; }
         public Vector2 Position { get; set; } = new Vector2(1, 82);

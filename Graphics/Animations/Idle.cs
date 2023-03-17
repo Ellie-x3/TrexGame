@@ -19,7 +19,7 @@ namespace TrexGame.Graphics.Animations{
                 new Frame(new Sprite(text, 848, 0, 44, 52), 1f + 1/3f)
             };
 
-            AnimationController controller = AnimationController.Instance(this, batch);
+            AnimationController controller = AnimationController.GetInstance(this, batch);
             controller.animationCompleted += new EventHandler(UpdateFrames);
         }
 
