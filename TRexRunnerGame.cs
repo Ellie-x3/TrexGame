@@ -28,7 +28,6 @@ public class TRexRunnerGame : Game {
     public Texture2D _spriteSheetTexture { get; set; }
 
     private Trex _trex;
-    private RedGuy redGuy;
 
     public TRexRunnerGame() {
         _graphics = new GraphicsDeviceManager(this);
@@ -54,7 +53,6 @@ public class TRexRunnerGame : Game {
         _spriteSheetTexture = Content.Load<Texture2D>(TREX_SPRITESHEET);
         Globals.Content = Content;
         _trex = new Trex(_spriteBatch, _sfxButtonPress);
-        redGuy = new RedGuy(_spriteBatch);
     }
 
     protected override void Update(GameTime gameTime) {
@@ -66,14 +64,12 @@ public class TRexRunnerGame : Game {
 
         base.Update(gameTime);
         _trex.Update(gameTime);
-        redGuy.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime) {
         GraphicsDevice.Clear(Color.White);
         _spriteBatch.Begin();
         _trex.Draw(_spriteBatch);
-        redGuy.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);

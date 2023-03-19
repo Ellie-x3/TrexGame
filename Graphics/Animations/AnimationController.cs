@@ -48,7 +48,6 @@ public sealed class AnimationController : IAnimationController {
     public bool ShouldLoop {get; set;} = true;
     public bool IsCurrentAnimationFinished {get; private set;}
     public List<Frame> frames {get; set;}
-    private static int count = 0;
 
     public EventHandler animationCompleted;
 
@@ -56,7 +55,6 @@ public sealed class AnimationController : IAnimationController {
         _animation = anim;
         frames = _animation.GetFrames;
         spriteBatch = s;
-        Console.WriteLine(++count);
     }
 
     public static AnimationController GetInstance(IAnimation anim, SpriteBatch s) {

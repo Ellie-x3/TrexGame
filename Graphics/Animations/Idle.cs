@@ -25,7 +25,6 @@ namespace TrexGame.Graphics.Animations{
 
         public void UpdateFrames(object sender, EventArgs e){
             Random random = new Random();
-            Console.WriteLine("meow");
             float randomTimeStamp = this.TotalFrames + (float)random.NextDouble() * (10f - this.TotalFrames);
             frames = new List<Frame>{
               new Frame(new Sprite(text, 848, 0, 44, 52), 0),

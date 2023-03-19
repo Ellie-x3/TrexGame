@@ -1,3 +1,4 @@
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using TrexGame.Entities;
@@ -16,11 +17,10 @@ internal class InputController{
         KeyboardState kbState = Keyboard.GetState();
         if(!prevKeyboardState.IsKeyDown(Keys.Up) && kbState.IsKeyDown(Keys.Up)){
             if(_trex.state != StateMachine.TrexState.Jumping)
-                 _trex.BeginJump();
-            else
-                _trex.ContinueJump();
-        }
-           
+                _trex.BeginJump();
+        } else if (prevKeyboardState.IsKeyDown(Keys.Up) && !kbState.IsKeyDown(Keys.Up) && _trex.state == StateMachine.TrexState.Jumping)
+                _trex.CancelJump();
+
 
         prevKeyboardState = kbState;
     }
